@@ -72,15 +72,16 @@ $(document).ready(function() {
     };
 
     //RubToUsd Converter
-    var currencyUrl = 'https://query.yahooapis.com/v1/public/yql?q=select+*+from+yahoo.finance.xchange+where+pair+=+"USDRUB,EURRUB"&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
+    var currencyUrl = 'https://www.cbr-xml-daily.ru/daily_json.js';
     var rurUsdRate = 0;
 
     $.ajax({
         url: currencyUrl,
         cache: false,
-        success: function(html){
-            /*rurUsdRate = html.query.results.rate[0].Rate;*/
-            rurUsdRate = 53; /* hardcoded until currencyURL fix*/
+        success: function(data){
+            data = JSON.parse(data);
+            rurUsdRate = data.Valute.USD.Value;
+        
             calculateUSD();
         }
     });
